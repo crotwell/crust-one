@@ -1,15 +1,24 @@
 
+try:
+    import importlib.resources as pkg_resources
+except ImportError:
+    # Try backported to PY<37 `importlib_resources`.
+    import importlib_resources as pkg_resources
+
+from . import data  # relative-import the *package* containing the templates
+
+
 from .profile import Layer, CrustOneProfile, CrustOne
 
 NUM_LATS=180
 NUM_LONS=360
 
-def parse(datadir):
+def parse():
     profiles = {}
-    with open(datadir+"/crust1.bnds") as bnds_file:
-        with open(datadir+"/crust1.vp") as vp_file:
-            with open(datadir+"/crust1.vs") as vs_file:
-                with open(datadir+"/crust1.rho") as rho_file:
+    with pkg_resources.open_text(data, "crust1.bnds") as bnds_file:
+        with pkg_resources.open_text(data, "crust1.vp") as vp_file:
+            with pkg_resources.open_text(data, "crust1.vs") as vs_file:
+                with pkg_resources.open_text(data, "crust1.rho") as rho_file:
                     for lat_idx in range(NUM_LATS):
                         for lon_idx in range(NUM_LONS):
                             strList = bnds_file.readline().strip().split()

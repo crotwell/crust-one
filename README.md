@@ -1,10 +1,22 @@
 # crust-one
-Read Crust1.0 model in python
+Read Crust1.0 model in python.
+
+https://igppweb.ucsd.edu/~gabi/crust1.html
+
+Crust1.0 data files are at:
+http://igppweb.ucsd.edu/~gabi/crust1/crust1.0.tar.gz
+
 
 # build/release
 ```
 conda create -n crust-one python=3.9
 conda activate crust-one
 python3 -m pip install --upgrade build
+python3 -m build
+pip install dist/crustone-0.0.1-py3-none-any.whl --force-reinstall
+```
+
+# maybe one day conda package:
+```
 conda install conda-build
 ```
