@@ -47,5 +47,4 @@ class CrustOne:
     def find_profile(self, lat, lon):
         lat_center = round(lat+.5)-0.5
         lon_center = round(lon+.5)-0.5
-        print(f"in: {lat}/{lon} center: {lat_center}/{lon_center}")
         return self.profiles[f"{lat_center}/{lon_center}"]
