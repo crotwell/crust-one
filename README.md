@@ -13,7 +13,7 @@ conda create -n crust-one python=3.9
 conda activate crust-one
 python3 -m pip install --upgrade build
 python3 -m build
-pip install dist/crustone-0.0.1-py3-none-any.whl --force-reinstall
+pip install dist/crustone-0.0.2-py3-none-any.whl --force-reinstall
 ```
 
 # maybe one day conda package:

@@ -5,9 +5,9 @@ class Layer:
     def __init__(self, topDepth, botDepth, vp, vs, rho):
         self.topDepth = topDepth
         self.botDepth = botDepth
-        self.vp = vp
-        self.vs = vs
-        self.rho = rho
+        self.vp = float(vp)
+        self.vs = float(vs)
+        self.rho = float(rho)
     def thick(self):
         return self.botDepth-self.topDepth
 
