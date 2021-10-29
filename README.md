@@ -6,6 +6,8 @@ https://igppweb.ucsd.edu/~gabi/crust1.html
 Crust1.0 data files are at:
 http://igppweb.ucsd.edu/~gabi/crust1/crust1.0.tar.gz
 
+Now also with Crust2.0 data for comparison.
+
 
 # build/release
 ```
