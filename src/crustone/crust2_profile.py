@@ -52,8 +52,18 @@ class CrustTwo:
         self.profiles = parse_key()
         self.type_key = parse_type()
     def find_profile(self, lat, lon):
+        if lat > 90 or lat < -90:
+            raise Exception(f"Lat must be between -90 and 90 but was {lat}")
+        if lon < -180 or lon > 360:
+            raise Exception(f"Lon must be between -180 and 360 but was {lon}")
         lat_center = round(lat/2.0)*2-1
         lon_center = round(lon/2.0)*2+1
+        if lat_center < -89:
+            # south pole is wrong in above calc
+            lat_center = -89
+        if lon_center > 180:
+            # needs to be -180 to 180
+            lon_center = lon_center - 360
         code = self.type_key[f"{lat_center}/{lon_center}"]
         code_profile = self.profiles[code]
         return CrustTwoProfile(lat_center, lon_center, code_profile.code, code_profile.name, code_profile.layers)

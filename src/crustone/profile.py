@@ -45,6 +45,14 @@ class CrustOne:
     def __init__(self, profiles):
         self.profiles = profiles
     def find_profile(self, lat, lon):
+        if lat > 90 or lat < -90:
+            raise Exception(f"Lat must be between -90 and 90 but was {lat}")
+        if lon < -180 or lon > 360:
+            raise Exception(f"Lon must be between -180 and 360 but was {lon}")
         lat_center = round(lat+.5)-0.5
         lon_center = round(lon+.5)-0.5
+        if lon_center > 180:
+            lon_center = lon_center - 360
+        if lat_center < -90:
+            lat_center = -89.5
         return self.profiles[f"{lat_center}/{lon_center}"]
