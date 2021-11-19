@@ -33,6 +33,8 @@ class CrustOneProfile:
     def crust_thick(self):
         # last layer is the halfspace (mantle), so topDepth is the moho depth
         return self.layers[-1].topDepth-self.layers[0].topDepth
+    def elevation(self):
+        return -1*self.layers[0].topDepth
     def __str__(self):
         s = f"{self.lat}/{self.lon}\n"
         for layer in self.layers[:-1]:
