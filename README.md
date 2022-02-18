@@ -18,6 +18,11 @@ python3 -m build
 pip install dist/crustone-0.0.4-py3-none-any.whl --force-reinstall
 ```
 
+# dev autobuild
+```
+python3 -m pip install -e .
+```
+
 # maybe one day conda package:
 ```
 conda install conda-build
