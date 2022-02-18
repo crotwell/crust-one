@@ -30,6 +30,8 @@ class CrustOneProfile:
                 vel = layer.vp
             travelTime += vel*layer.thick();
         return travelTime/self.crust_thick();
+    def avg_vpvs(self):
+        return self.avg_vp()/self.avg_vs()
     def crust_thick(self):
         # last layer is the halfspace (mantle), so topDepth is the moho depth
         return self.layers[-1].topDepth-self.layers[0].topDepth
