@@ -6,7 +6,7 @@ c1 = crustone.parse()
 min=9999
 max=-1
 for p in c1.profiles.values():
-    vpvs = p.avg_vpvs()
+    vpvs = p.avg_vpvs(includeIceWater=False)
     #print(f"{vpvs:3.2f},{p.lat},{p.lon}")
     if vpvs > max:
         max = vpvs
@@ -20,7 +20,7 @@ c2 = crustone.CrustTwo()
 min=9999
 max=-1
 for p in c2.profiles.values():
-    vpvs = p.asProfile().avg_vpvs()
+    vpvs = p.asProfile().avg_vpvs(includeIceWater=False)
     no_comma = p.name.replace(',','\,')
     #print(f"{vpvs:3.2f},{p.code},{no_comma}")
     if vpvs > max:

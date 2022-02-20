@@ -23,22 +23,33 @@ class CrustTwoProfile:
         self.code = code
         self.name = name
         self.layers = layers
-    def avg_vp(self):
+    def avg_vp(self, includeIceWater=False):
         travelTime = 0;
-        for layer in self.layers[:-1]:
+        if includeIceWater:
+            layers = self.layers[:-1]
+        else:
+            layers = self.layers[2:-1]
+        for layer in layers:
             travelTime += layer.vp*layer.thick();
         return travelTime/self.crust_thick();
-    def avg_vs(self):
+    def avg_vs(self, includeIceWater=False):
         travelTime = 0;
-        for layer in self.layers[:-1]:
+        if includeIceWater:
+            layers = self.layers[:-1]
+        else:
+            layers = self.layers[2:-1]
+        for layer in layers:
             vel = layer.vs
             if layer.vs == 0.0:
-                # water? use vp
-                vel = layer.vp
+                if (includeIceWater or layer.thick() == 0):
+                    # water? use vp
+                    vel = layer.vp
+                else:
+                    raise Exception(f"Water layer, but includeIceWater=False, {self.lat}/{self.lon} {self.code}")
             travelTime += vel*layer.thick();
         return travelTime/self.crust_thick();
-    def avg_vpvs(self):
-        return self.avg_vp()/self.avg_vs()
+    def avg_vpvs(self, includeIceWater=False):
+        return self.avg_vp(includeIceWater)/self.avg_vs(includeIceWater)
     def crust_thick(self):
         # last layer is the halfspace (mantle), so topDepth is the moho depth
         return self.layers[-1].topDepth-self.layers[0].topDepth
