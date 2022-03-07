@@ -49,11 +49,36 @@ class CrustOneProfile:
     def elevation(self):
         return -1*self.layers[0].topDepth
     def __str__(self):
-        s = f"{self.lat}/{self.lon}\n"
+        s = f"Crust1.0 {self.lat}/{self.lon}\n"
         for layer in self.layers[:-1]:
             s += f"{round(layer.thick(), 2)} ({layer.topDepth} to {layer.botDepth}), {layer.vp} {layer.vs} {layer.rho}\n"
         layer = self.layers[-1]
         s += f"0 ({layer.topDepth} as halfspace), {layer.vp} {layer.vs} {layer.rho}"
+        return s
+    def as_nd_model(self, bottom=77.5, includeIceWater=False):
+        """
+        print profile as .nd style model, for use by TauP for example.
+        bottom is the depth for the bottom of the uppermost layer in the mantle
+        as mantle in Crust1.0 is a halfspace. This helps when merging to avoid
+        having a partial crustal layer leak in from the original global model.
+        if includeIceWater is false, then the model starts at the bottom of
+        the ocean, eliminating the first two layers, which are ice and water.
+        """
+        if includeIceWater:
+            layers = self.layers
+        else:
+            layers = self.layers[2:]
+        s = f"# Crust1.0 {self.lat}/{self.lon} ice-water={includeIceWater}\n"
+        for layer in layers[:-1]:
+            if layer.thick() != 0.0:
+                s += f"{layer.topDepth:5.2f} {layer.vp:5.2f} {layer.vs:5.2f} {layer.rho:5.2f}\n"
+                s += f"{layer.botDepth:5.2f} {layer.vp:5.2f} {layer.vs:5.2f} {layer.rho:5.2f}\n"
+        # only top of mantle layer
+        layer = self.layers[-1]
+        s += "mantle\n"
+        s += f"{layer.topDepth:5.2f} {layer.vp:5.2f} {layer.vs:5.2f} {layer.rho:5.2f}\n"
+        if bottom > layer.topDepth:
+            s += f"{bottom:5.2f} {layer.vp:5.2f} {layer.vs:5.2f} {layer.rho:5.2f}\n"
         return s
 
 class CrustOne:
